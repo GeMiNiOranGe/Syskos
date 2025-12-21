@@ -1,0 +1,12 @@
+BasedOnStyle: Chromium
+AccessModifierOffset: -4
+AlignAfterOpenBracket: BlockIndent
+AlignEscapedNewlines: Right
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBinaryOperators: NonAssignment
+ColumnLimit: 80
+IndentWidth: 4
+InsertNewlineAtEOF: true
+LineEnding: LF
+PointerAlignment: Middle
