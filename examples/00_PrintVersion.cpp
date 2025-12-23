@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <Syskos/config.hpp>
+#include <Syskos/Config.hpp>
 
 int main(int argc, char const * argv[]) {
     std::cout << "Syskos version: ";

@@ -26,7 +26,7 @@ convert_pascalcase_to_upper_snakecase(
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.hpp.in
-    ${CMAKE_CURRENT_BINARY_DIR}/include/Syskos/config.hpp
+    ${CMAKE_CURRENT_BINARY_DIR}/include/Syskos/Config.hpp
 )
 
 # Build library
@@ -35,12 +35,18 @@ add_library(${SYSKOS_ALIAS} ALIAS syskos)
 
 target_sources(syskos
     PRIVATE
+        library/Screen.cpp
         library/Syskos.cpp
+        library/WindowStandard.cpp
+        library/WindowVisual.cpp
     PUBLIC
         FILE_SET HEADERS
         BASE_DIRS include
         FILES
-            include/Syskos/syskos.hpp
+            include/Syskos/Detail/Screen.hpp
+            include/Syskos/Detail/WindowStandard.hpp
+            include/Syskos/Detail/WindowVisual.hpp
+            include/Syskos/Syskos.hpp
 )
 target_include_directories(syskos PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
