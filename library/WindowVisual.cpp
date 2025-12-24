@@ -2,24 +2,19 @@
 
 namespace {
 
-// Get the real visual bounds size of the console window
-SIZE GetVisualBoundsSize(HWND hwnd) {
-    RECT extended{};
+RECT GetExtendedFrameBoundsRect(HWND hwnd) {
+    RECT attribute{};
     DwmGetWindowAttribute(
-        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended)
+        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &attribute, sizeof(attribute)
     );
-    LONG cx = extended.right - extended.left;
-    LONG cy = extended.bottom - extended.top;
-    return {cx, cy};
+    return attribute;
 }
 
-// Get the real visual bounds of the console window
-RECT GetVisualBounds(HWND hwnd) {
-    RECT extended{};
-    DwmGetWindowAttribute(
-        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended)
-    );
-    return extended;
+SIZE GetExtendedFrameBoundsSize(HWND hwnd) {
+    RECT attribute = GetExtendedFrameBoundsRect(hwnd);
+    LONG cx = attribute.right - attribute.left;
+    LONG cy = attribute.bottom - attribute.top;
+    return {cx, cy};
 }
 
 }  // namespace
@@ -27,116 +22,116 @@ RECT GetVisualBounds(HWND hwnd) {
 namespace Syskos::Window::Detail::Visual {
 
 void MoveToTopLeft() {
-    LONG posX = 0;
-    LONG posY = 0;
-    MoveTo(posX, posY);
+    LONG targetX = 0;
+    LONG targetY = 0;
+    MoveTo(targetX, targetY);
 }
 
 void MoveToTop() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
-    LONG posY = 0;
+    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+    LONG targetY = 0;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToTopRight() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = workAreaSize.cx - boundsSize.cx;
-    LONG posY = 0;
+    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+    LONG targetY = 0;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToLeft() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = 0;
-    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+    LONG targetX = 0;
+    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToCenter() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
-    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToRight() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = workAreaSize.cx - boundsSize.cx;
-    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToBottomLeft() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = 0;
-    LONG posY = workAreaSize.cy - boundsSize.cy;
+    LONG targetX = 0;
+    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToBottom() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
-    LONG posY = workAreaSize.cy - boundsSize.cy;
+    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
 void MoveToBottomRight() {
     HWND hwnd = GetConsoleWindow();
-    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
-    LONG posX = workAreaSize.cx - boundsSize.cx;
-    LONG posY = workAreaSize.cy - boundsSize.cy;
+    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
 
-    MoveTo(posX, posY);
+    MoveTo(targetX, targetY);
 }
 
-void MoveTo(LONG xCoord, LONG yCoord) {
+void MoveTo(LONG targetX, LONG targetY) {
     HWND hwnd = GetConsoleWindow();
 
-    RECT extended = GetVisualBounds(hwnd);
-    RECT bounds;
-    GetWindowRect(hwnd, &bounds);
+    RECT extendedFrameBounds = GetExtendedFrameBoundsRect(hwnd);
+    RECT window{};
+    GetWindowRect(hwnd, &window);
 
-    LONG deltaX = extended.left - bounds.left;
-    LONG deltaY = extended.top - bounds.top;
+    LONG offsetX = extendedFrameBounds.left - window.left;
+    LONG offsetY = extendedFrameBounds.top - window.top;
 
-    LONG width = bounds.right - bounds.left;
-    LONG height = bounds.bottom - bounds.top;
+    LONG width = window.right - window.left;
+    LONG height = window.bottom - window.top;
 
-    LONG x = xCoord - deltaX;
-    LONG y = yCoord - deltaY;
+    LONG adjustedX = targetX - offsetX;
+    LONG adjustedY = targetY - offsetY;
 
-    MoveWindow(hwnd, x, y, width, height, TRUE);
+    MoveWindow(hwnd, adjustedX, adjustedY, width, height, TRUE);
 }
 
 }  // namespace Syskos::Window::Detail::Visual
