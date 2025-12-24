@@ -2,98 +2,130 @@
 
 namespace {
 
-const SIZE WORK_AREA_SIZE = Syskos::Screen::Detail::GetWorkAreaSize();
-
+// Get the real visual bounds size of the console window
+SIZE GetVisualBoundsSize(HWND hwnd) {
+    RECT extended{};
+    DwmGetWindowAttribute(
+        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended)
+    );
+    LONG cx = extended.right - extended.left;
+    LONG cy = extended.bottom - extended.top;
+    return {cx, cy};
 }
+
+// Get the real visual bounds of the console window
+RECT GetVisualBounds(HWND hwnd) {
+    RECT extended{};
+    DwmGetWindowAttribute(
+        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended)
+    );
+    return extended;
+}
+
+}  // namespace
 
 namespace Syskos::Window::Detail::Visual {
 
 void MoveToTopLeft() {
-    int posX = 0;
-    int posY = 0;
+    LONG posX = 0;
+    LONG posY = 0;
     MoveTo(posX, posY);
 }
 
 void MoveToTop() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx / 2 - (bounds.right - bounds.left) / 2;
-    int posY = 0;
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
+    LONG posY = 0;
+
     MoveTo(posX, posY);
 }
 
 void MoveToTopRight() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx - (bounds.right - bounds.left);
-    int posY = 0;
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = workAreaSize.cx - boundsSize.cx;
+    LONG posY = 0;
+
     MoveTo(posX, posY);
 }
 
 void MoveToLeft() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = 0;
-    int posY = WORK_AREA_SIZE.cy / 2 - (bounds.bottom - bounds.top) / 2;
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = 0;
+    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+
     MoveTo(posX, posY);
 }
 
 void MoveToCenter() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx / 2 - (bounds.right - bounds.left) / 2;
-    int posY = WORK_AREA_SIZE.cy / 2 - (bounds.bottom - bounds.top) / 2;
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
+    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+
     MoveTo(posX, posY);
 }
 
 void MoveToRight() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx - (bounds.right - bounds.left);
-    int posY = WORK_AREA_SIZE.cy / 2 - (bounds.bottom - bounds.top) / 2;
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = workAreaSize.cx - boundsSize.cx;
+    LONG posY = (workAreaSize.cy - boundsSize.cy) / 2;
+
     MoveTo(posX, posY);
 }
 
 void MoveToBottomLeft() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = 0;
-    int posY = WORK_AREA_SIZE.cy - (bounds.bottom - bounds.top);
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = 0;
+    LONG posY = workAreaSize.cy - boundsSize.cy;
+
     MoveTo(posX, posY);
 }
 
 void MoveToBottom() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx / 2 - (bounds.right - bounds.left) / 2;
-    int posY = WORK_AREA_SIZE.cy - (bounds.bottom - bounds.top);
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = (workAreaSize.cx - boundsSize.cx) / 2;
+    LONG posY = workAreaSize.cy - boundsSize.cy;
+
     MoveTo(posX, posY);
 }
 
 void MoveToBottomRight() {
-    RECT bounds;
     HWND hwnd = GetConsoleWindow();
-    GetWindowRect(hwnd, &bounds);
-    int posX = WORK_AREA_SIZE.cx - (bounds.right - bounds.left);
-    int posY = WORK_AREA_SIZE.cy - (bounds.bottom - bounds.top);
+    SIZE boundsSize = GetVisualBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG posX = workAreaSize.cx - boundsSize.cx;
+    LONG posY = workAreaSize.cy - boundsSize.cy;
+
     MoveTo(posX, posY);
 }
 
 void MoveTo(LONG xCoord, LONG yCoord) {
     HWND hwnd = GetConsoleWindow();
 
-    RECT bounds, extended;
+    RECT extended = GetVisualBounds(hwnd);
+    RECT bounds;
     GetWindowRect(hwnd, &bounds);
-    DwmGetWindowAttribute(
-        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &extended, sizeof(extended)
-    );
 
     LONG deltaX = extended.left - bounds.left;
     LONG deltaY = extended.top - bounds.top;
