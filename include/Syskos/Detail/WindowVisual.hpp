@@ -4,8 +4,10 @@
 
 #include <Windows.h>
 #include <dwmapi.h>
+#include <stdexcept>
 
 #include <Syskos/Detail/Screen.hpp>
+#include <Syskos/WindowAnchor.hpp>
 
 #pragma comment(lib, "Dwmapi.lib")
 
@@ -20,7 +22,8 @@ void MoveToRight();
 void MoveToBottomLeft();
 void MoveToBottom();
 void MoveToBottomRight();
-void MoveTo(LONG xCoord, LONG yCoord);
+void MoveTo(WindowAnchor anchor);
+void MoveTo(LONG targetX, LONG targetY);
 
 }  // namespace Syskos::Window::Detail::Visual
 

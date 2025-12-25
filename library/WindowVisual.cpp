@@ -17,107 +17,17 @@ SIZE GetExtendedFrameBoundsSize(HWND hwnd) {
     return {cx, cy};
 }
 
-}  // namespace
+HWND GetHandleWindow() {
+    static HWND hwnd = nullptr;
 
-namespace Syskos::Window::Detail::Visual {
+    if (!hwnd) {
+        hwnd = GetConsoleWindow();
+    }
 
-void MoveToTopLeft() {
-    LONG targetX = 0;
-    LONG targetY = 0;
-    MoveTo(targetX, targetY);
+    return hwnd;
 }
 
-void MoveToTop() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
-    LONG targetY = 0;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToTopRight() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
-    LONG targetY = 0;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToLeft() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = 0;
-    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToCenter() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
-    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToRight() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
-    LONG targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToBottomLeft() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = 0;
-    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToBottom() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
-    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveToBottomRight() {
-    HWND hwnd = GetConsoleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
-
-    LONG targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
-    LONG targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
-
-    MoveTo(targetX, targetY);
-}
-
-void MoveTo(LONG targetX, LONG targetY) {
-    HWND hwnd = GetConsoleWindow();
-
+void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
     RECT extendedFrameBounds = GetExtendedFrameBoundsRect(hwnd);
     RECT window{};
     GetWindowRect(hwnd, &window);
@@ -132,6 +42,113 @@ void MoveTo(LONG targetX, LONG targetY) {
     LONG adjustedY = targetY - offsetY;
 
     MoveWindow(hwnd, adjustedX, adjustedY, width, height, TRUE);
+}
+
+}  // namespace
+
+namespace Syskos::Window::Detail::Visual {
+
+void MoveToTopLeft() {
+    MoveTo(WindowAnchor::TopLeft);
+}
+
+void MoveToTop() {
+    MoveTo(WindowAnchor::Top);
+}
+
+void MoveToTopRight() {
+    MoveTo(WindowAnchor::TopRight);
+}
+
+void MoveToLeft() {
+    MoveTo(WindowAnchor::Left);
+}
+
+void MoveToCenter() {
+    MoveTo(WindowAnchor::Center);
+}
+
+void MoveToRight() {
+    MoveTo(WindowAnchor::Right);
+}
+
+void MoveToBottomLeft() {
+    MoveTo(WindowAnchor::BottomLeft);
+}
+
+void MoveToBottom() {
+    MoveTo(WindowAnchor::Bottom);
+}
+
+void MoveToBottomRight() {
+    MoveTo(WindowAnchor::BottomRight);
+}
+
+void MoveTo(WindowAnchor anchor) {
+    HWND hwnd = GetHandleWindow();
+    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
+    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+
+    LONG targetX, targetY;
+
+    switch (anchor) {
+        case WindowAnchor::TopLeft: {
+            targetX = 0;
+            targetY = 0;
+            break;
+        }
+        case WindowAnchor::Top: {
+            targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+            targetY = 0;
+            break;
+        }
+        case WindowAnchor::TopRight: {
+            targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+            targetY = 0;
+            break;
+        }
+        case WindowAnchor::Left: {
+            targetX = 0;
+            targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
+            break;
+        }
+        case WindowAnchor::Center: {
+            targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+            targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
+            break;
+        }
+        case WindowAnchor::Right: {
+            targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+            targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
+            break;
+        }
+        case WindowAnchor::BottomLeft: {
+            targetX = 0;
+            targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
+            break;
+        }
+        case WindowAnchor::Bottom: {
+            targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
+            targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
+            break;
+        }
+        case WindowAnchor::BottomRight: {
+            targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
+            targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
+            break;
+        }
+        default: {
+            throw std::invalid_argument("Unhandled WindowAnchor in MoveTo");
+        }
+    }
+
+    MoveToImpl(hwnd, targetX, targetY);
+}
+
+void MoveTo(LONG targetX, LONG targetY) {
+    HWND hwnd = GetHandleWindow();
+
+    MoveToImpl(hwnd, targetX, targetY);
 }
 
 }  // namespace Syskos::Window::Detail::Visual
