@@ -48,6 +48,26 @@ void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
 
 namespace Syskos::Window::Detail::Visual {
 
+HRESULT GetWindowGeometry(WindowGeometry & geometry) {
+    HWND hwnd = GetHandleWindow();
+
+    RECT rect{};
+    HRESULT result = DwmGetWindowAttribute(
+        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &rect, sizeof(rect)
+    );
+
+    if (FAILED(result)) {
+        return result;
+    }
+
+    geometry.point.x = rect.left;
+    geometry.point.y = rect.top;
+    geometry.size.cx = rect.right - rect.left;
+    geometry.size.cy = rect.bottom - rect.top;
+
+    return S_OK;
+}
+
 void MoveToTopLeft() {
     MoveTo(WindowAnchor::TopLeft);
 }

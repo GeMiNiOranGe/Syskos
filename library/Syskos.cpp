@@ -2,6 +2,10 @@
 
 namespace Syskos::Window {
 
+HRESULT GetWindowGeometry(WindowGeometry & geometry) {
+    return Detail::Visual::GetWindowGeometry(geometry);
+}
+
 void MoveToTopLeft(bool visual) {
     if (visual) {
         Detail::Visual::MoveToTopLeft();

@@ -8,10 +8,13 @@
 
 #include <Syskos/Detail/Screen.hpp>
 #include <Syskos/WindowAnchor.hpp>
+#include <Syskos/WindowGeometry.hpp>
 
 #pragma comment(lib, "Dwmapi.lib")
 
 namespace Syskos::Window::Detail::Visual {
+
+HRESULT GetWindowGeometry(WindowGeometry & geometry);
 
 void MoveToTopLeft();
 void MoveToTop();

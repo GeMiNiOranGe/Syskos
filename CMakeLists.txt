@@ -47,6 +47,8 @@ target_sources(syskos
             include/Syskos/Detail/WindowStandard.hpp
             include/Syskos/Detail/WindowVisual.hpp
             include/Syskos/Syskos.hpp
+            include/Syskos/WindowAnchor.hpp
+            include/Syskos/WindowGeometry.hpp
 )
 target_include_directories(syskos PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

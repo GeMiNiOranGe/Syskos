@@ -9,6 +9,8 @@
 
 namespace Syskos::Window {
 
+HRESULT GetWindowGeometry(WindowGeometry & geometry);
+
 void MoveToTopLeft(bool visual = true);
 void MoveToTop(bool visual = true);
 void MoveToTopRight(bool visual = true);
