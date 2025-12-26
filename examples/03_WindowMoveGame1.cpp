@@ -4,28 +4,64 @@
 
 #include <Syskos/Syskos.hpp>
 
+static const std::unordered_map<int, std::function<void(bool)>> keyMap = {
+    {'7', Syskos::Window::MoveToTopLeft},
+    {'Q', Syskos::Window::MoveToTopLeft},
+    {'q', Syskos::Window::MoveToTopLeft},
+    {'8', Syskos::Window::MoveToTop},
+    {'W', Syskos::Window::MoveToTop},
+    {'w', Syskos::Window::MoveToTop},
+    {'9', Syskos::Window::MoveToTopRight},
+    {'E', Syskos::Window::MoveToTopRight},
+    {'e', Syskos::Window::MoveToTopRight},
+    {'4', Syskos::Window::MoveToLeft},
+    {'A', Syskos::Window::MoveToLeft},
+    {'a', Syskos::Window::MoveToLeft},
+    {'5', Syskos::Window::MoveToCenter},
+    {'S', Syskos::Window::MoveToCenter},
+    {'s', Syskos::Window::MoveToCenter},
+    {'6', Syskos::Window::MoveToRight},
+    {'D', Syskos::Window::MoveToRight},
+    {'d', Syskos::Window::MoveToRight},
+    {'1', Syskos::Window::MoveToBottomLeft},
+    {'Z', Syskos::Window::MoveToBottomLeft},
+    {'z', Syskos::Window::MoveToBottomLeft},
+    {'2', Syskos::Window::MoveToBottom},
+    {'X', Syskos::Window::MoveToBottom},
+    {'x', Syskos::Window::MoveToBottom},
+    {'3', Syskos::Window::MoveToBottomRight},
+    {'C', Syskos::Window::MoveToBottomRight},
+    {'c', Syskos::Window::MoveToBottomRight},
+};
+
 void ExecuteMove(int key, bool isVisualMode);
 
 int main(int argc, char const * argv[]) {
+    constexpr int KEY_ESC = 27;
+    constexpr int KEY_MODE = 'm';
+
     Syskos::Window::MoveToCenter();
 
     bool isVisualMode = true;
     int key, lastKey = 0;
 
-    do {
-        system("cls");
-        std::cout << "[Esc] Exit" << '\n';
-        std::cout << "[Tab] Toggle Move Mode (Current: "
-                  << (isVisualMode ? "Visual" : "Standard") << ")" << '\n';
-        std::cout << "Use QWE/ASD/ZXC or numpad to move the window:" << '\n';
-        std::cout << "Qq Ww Ee  |  7 8 9" << '\n';
-        std::cout << "Aa Ss Dd  |  4 5 6" << '\n';
-        std::cout << "Zz Xx Cc  |  1 2 3" << '\n';
+    std::cout << "[Esc] Exit" << '\n';
+    std::cout << "[M]   Toggle Move Mode (Default: Visual)" << "\n\n";
 
+    std::cout << "Use QWE/ASD/ZXC or the numpad to move the window:" << '\n';
+    std::cout << "Qq Ww Ee  |  7 8 9" << '\n';
+    std::cout << "Aa Ss Dd  |  4 5 6" << '\n';
+    std::cout << "Zz Xx Cc  |  1 2 3" << "\n\n";
+
+    do {
         key = _getch();
 
-        if (key == 9) {
+        if (key == KEY_MODE) {
             isVisualMode = !isVisualMode;
+
+            std::string mode = isVisualMode ? "Visual" : "Standard";
+            std::cout << "Current move mode: " << mode << '\n';
+
             if (lastKey != 0) {
                 ExecuteMove(lastKey, isVisualMode);
             }
@@ -35,69 +71,13 @@ int main(int argc, char const * argv[]) {
         }
 
         ExecuteMove(key, isVisualMode);
-    } while (key != 27);
+    } while (key != KEY_ESC);
 
     return 0;
 }
 
 void ExecuteMove(int key, bool isVisualMode) {
-    switch (key) {
-        case '7':
-        case 'Q':
-        case 'q': {
-            Syskos::Window::MoveToTopLeft(isVisualMode);
-            break;
-        }
-        case '8':
-        case 'W':
-        case 'w': {
-            Syskos::Window::MoveToTop(isVisualMode);
-            break;
-        }
-        case '9':
-        case 'E':
-        case 'e': {
-            Syskos::Window::MoveToTopRight(isVisualMode);
-            break;
-        }
-        case '4':
-        case 'A':
-        case 'a': {
-            Syskos::Window::MoveToLeft(isVisualMode);
-            break;
-        }
-        case '5':
-        case 'S':
-        case 's': {
-            Syskos::Window::MoveToCenter(isVisualMode);
-            break;
-        }
-        case '6':
-        case 'D':
-        case 'd': {
-            Syskos::Window::MoveToRight(isVisualMode);
-            break;
-        }
-        case '1':
-        case 'Z':
-        case 'z': {
-            Syskos::Window::MoveToBottomLeft(isVisualMode);
-            break;
-        }
-        case '2':
-        case 'X':
-        case 'x': {
-            Syskos::Window::MoveToBottom(isVisualMode);
-            break;
-        }
-        case '3':
-        case 'C':
-        case 'c': {
-            Syskos::Window::MoveToBottomRight(isVisualMode);
-            break;
-        }
-        default: {
-            break;
-        }
+    if (auto it = keyMap.find(key); it != keyMap.end()) {
+        it->second(isVisualMode);
     }
 }
