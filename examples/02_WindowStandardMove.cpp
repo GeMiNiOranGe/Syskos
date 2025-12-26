@@ -1,21 +1,19 @@
 #include <functional>
 #include <iostream>
 
-#include <syskos/syskos.hpp>
-
-using namespace Syskos;
+#include <Syskos/Syskos.hpp>
 
 int main(int argc, char const * argv[]) {
     std::function<void()> operations[] = {
-        []() { Window::MoveToTopLeft(false); },
-        []() { Window::MoveToTop(false); },
-        []() { Window::MoveToTopRight(false); },
-        []() { Window::MoveToLeft(false); },
-        []() { Window::MoveToCenter(false); },
-        []() { Window::MoveToRight(false); },
-        []() { Window::MoveToBottomLeft(false); },
-        []() { Window::MoveToBottom(false); },
-        []() { Window::MoveToBottomRight(false); },
+        []() { Syskos::Window::MoveToTopLeft(false); },
+        []() { Syskos::Window::MoveToTop(false); },
+        []() { Syskos::Window::MoveToTopRight(false); },
+        []() { Syskos::Window::MoveToLeft(false); },
+        []() { Syskos::Window::MoveToCenter(false); },
+        []() { Syskos::Window::MoveToRight(false); },
+        []() { Syskos::Window::MoveToBottomLeft(false); },
+        []() { Syskos::Window::MoveToBottom(false); },
+        []() { Syskos::Window::MoveToBottomRight(false); },
     };
 
     for (const auto & op : operations) {
