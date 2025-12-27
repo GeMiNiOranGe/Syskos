@@ -9,6 +9,8 @@
 
 namespace Syskos::Window {
 
+void SetResizable(bool enabled);
+
 HRESULT GetWindowGeometry(WindowGeometry & geometry);
 
 void MoveToTopLeft(bool visual = true);

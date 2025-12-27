@@ -1,6 +1,27 @@
-#include <syskos/syskos.hpp>
+#include <Syskos/Syskos.hpp>
 
 namespace Syskos::Window {
+
+void SetResizable(bool enabled) {
+    HWND console = GetConsoleWindow();
+    if (console == NULL) {
+        return;
+    }
+
+    LONG style = GetWindowLong(console, GWL_STYLE);
+
+    if (enabled) {
+        // Add resize border and maximize button
+        style |= WS_SIZEBOX;
+        style |= WS_MAXIMIZEBOX;
+    } else {
+        // Remove resize border and maximize button
+        style &= ~WS_SIZEBOX;
+        style &= ~WS_MAXIMIZEBOX;
+    }
+
+    SetWindowLong(console, GWL_STYLE, style);
+}
 
 HRESULT GetWindowGeometry(WindowGeometry & geometry) {
     return Detail::Visual::GetWindowGeometry(geometry);
