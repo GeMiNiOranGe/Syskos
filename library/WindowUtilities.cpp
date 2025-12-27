@@ -1,6 +1,6 @@
 #include <Syskos/Detail/WindowUtilities.hpp>
 
-namespace Syskos::Window::Detail::Utilities {
+namespace Syskos::Detail::Window::Utilities {
 
 HWND GetHandleWindow() {
     static HWND hwnd = nullptr;
@@ -12,4 +12,4 @@ HWND GetHandleWindow() {
     return hwnd;
 }
 
-}  // namespace Syskos::Window::Detail::Utilities
+}  // namespace Syskos::Detail::Window::Utilities

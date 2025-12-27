@@ -6,7 +6,7 @@
 
 #include <Syskos/Detail/Screen.hpp>
 
-namespace Syskos::Window::Detail::Standard {
+namespace Syskos::Detail::Window::Standard {
 
 void MoveToTopLeft();
 void MoveToTop();
@@ -19,6 +19,6 @@ void MoveToBottom();
 void MoveToBottomRight();
 void MoveTo(LONG xCoord, LONG yCoord);
 
-}  // namespace Syskos::Window::Detail::Standard
+}  // namespace Syskos::Detail::Window::Standard
 
 #endif  // end WINDOWSTANDARD_HPP

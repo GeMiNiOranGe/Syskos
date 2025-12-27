@@ -4,7 +4,7 @@
 
 namespace Syskos::Window {
 
-struct WindowGeometry {
+struct Geometry {
     POINT point;
     SIZE size;
 };

@@ -4,7 +4,7 @@
 
 namespace Syskos::Window {
 
-enum class WindowAnchor {
+enum class Anchor {
     TopLeft,
     Top,
     TopRight,

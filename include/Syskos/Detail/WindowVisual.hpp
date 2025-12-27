@@ -13,9 +13,9 @@
 
 #pragma comment(lib, "Dwmapi.lib")
 
-namespace Syskos::Window::Detail::Visual {
+namespace Syskos::Detail::Window::Visual {
 
-HRESULT GetWindowGeometry(WindowGeometry & geometry);
+HRESULT GetGeometry(Syskos::Window::Geometry & geometry);
 
 void MoveToTopLeft();
 void MoveToTop();
@@ -26,9 +26,9 @@ void MoveToRight();
 void MoveToBottomLeft();
 void MoveToBottom();
 void MoveToBottomRight();
-void MoveTo(WindowAnchor anchor);
+void MoveTo(Syskos::Window::Anchor anchor);
 void MoveTo(LONG targetX, LONG targetY);
 
-}  // namespace Syskos::Window::Detail::Visual
+}  // namespace Syskos::Detail::Window::Visual
 
 #endif  // end WINDOWVISUAL_HPP

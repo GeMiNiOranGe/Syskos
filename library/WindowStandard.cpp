@@ -2,11 +2,11 @@
 
 namespace {
 
-const SIZE WORK_AREA_SIZE = Syskos::Screen::Detail::GetWorkAreaSize();
+const SIZE WORK_AREA_SIZE = Syskos::Detail::Screen::GetWorkAreaSize();
 
 }
 
-namespace Syskos::Window::Detail::Standard {
+namespace Syskos::Detail::Window::Standard {
 
 void MoveToTopLeft() {
     int posX = 0;
@@ -95,4 +95,4 @@ void MoveTo(LONG xCoord, LONG yCoord) {
     MoveWindow(hwnd, xCoord, yCoord, width, height, TRUE);
 }
 
-}  // namespace Syskos::Window::Detail::Standard
+}  // namespace Syskos::Detail::Window::Standard

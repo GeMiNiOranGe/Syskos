@@ -1,6 +1,6 @@
 #include <Syskos/Detail/Screen.hpp>
 
-namespace Syskos::Screen::Detail {
+namespace Syskos::Detail::Screen {
 
 int GetTaskbarHeight() {
     RECT rect;
@@ -18,4 +18,4 @@ SIZE GetWorkAreaSize() {
     return {cx, cy};
 }
 
-}  // namespace Syskos::Screen::Detail
+}  // namespace Syskos::Detail::Screen

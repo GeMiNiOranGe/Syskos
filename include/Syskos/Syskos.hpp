@@ -11,7 +11,7 @@ namespace Syskos::Window {
 
 void SetResizable(bool enabled);
 
-HRESULT GetWindowGeometry(WindowGeometry & geometry);
+HRESULT GetGeometry(Geometry & geometry);
 
 void MoveToTopLeft(bool visual = true);
 void MoveToTop(bool visual = true);
@@ -30,11 +30,11 @@ void Resize(LONG width, LONG height);
 namespace Syskos::Screen {
 
 inline SIZE GetWorkAreaSize() {
-    return Detail::GetWorkAreaSize();
+    return Detail::Screen::GetWorkAreaSize();
 }
 
 inline int GetTaskbarHeight() {
-    return Detail::GetTaskbarHeight();
+    return Detail::Screen::GetTaskbarHeight();
 }
 
 }  // namespace Syskos::Screen

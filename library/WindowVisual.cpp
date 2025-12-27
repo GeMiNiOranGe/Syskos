@@ -36,9 +36,9 @@ void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
 
 }  // namespace
 
-namespace Syskos::Window::Detail::Visual {
+namespace Syskos::Detail::Window::Visual {
 
-HRESULT GetWindowGeometry(WindowGeometry & geometry) {
+HRESULT GetGeometry(Syskos::Window::Geometry & geometry) {
     HWND hwnd = Utilities::GetHandleWindow();
 
     RECT rect{};
@@ -59,96 +59,96 @@ HRESULT GetWindowGeometry(WindowGeometry & geometry) {
 }
 
 void MoveToTopLeft() {
-    MoveTo(WindowAnchor::TopLeft);
+    MoveTo(Syskos::Window::Anchor::TopLeft);
 }
 
 void MoveToTop() {
-    MoveTo(WindowAnchor::Top);
+    MoveTo(Syskos::Window::Anchor::Top);
 }
 
 void MoveToTopRight() {
-    MoveTo(WindowAnchor::TopRight);
+    MoveTo(Syskos::Window::Anchor::TopRight);
 }
 
 void MoveToLeft() {
-    MoveTo(WindowAnchor::Left);
+    MoveTo(Syskos::Window::Anchor::Left);
 }
 
 void MoveToCenter() {
-    MoveTo(WindowAnchor::Center);
+    MoveTo(Syskos::Window::Anchor::Center);
 }
 
 void MoveToRight() {
-    MoveTo(WindowAnchor::Right);
+    MoveTo(Syskos::Window::Anchor::Right);
 }
 
 void MoveToBottomLeft() {
-    MoveTo(WindowAnchor::BottomLeft);
+    MoveTo(Syskos::Window::Anchor::BottomLeft);
 }
 
 void MoveToBottom() {
-    MoveTo(WindowAnchor::Bottom);
+    MoveTo(Syskos::Window::Anchor::Bottom);
 }
 
 void MoveToBottomRight() {
-    MoveTo(WindowAnchor::BottomRight);
+    MoveTo(Syskos::Window::Anchor::BottomRight);
 }
 
-void MoveTo(WindowAnchor anchor) {
+void MoveTo(Syskos::Window::Anchor anchor) {
     HWND hwnd = Utilities::GetHandleWindow();
     SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
-    SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
+    SIZE workAreaSize = Screen::GetWorkAreaSize();
 
     LONG targetX, targetY;
 
     switch (anchor) {
-        case WindowAnchor::TopLeft: {
+        case Syskos::Window::Anchor::TopLeft: {
             targetX = 0;
             targetY = 0;
             break;
         }
-        case WindowAnchor::Top: {
+        case Syskos::Window::Anchor::Top: {
             targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
             targetY = 0;
             break;
         }
-        case WindowAnchor::TopRight: {
+        case Syskos::Window::Anchor::TopRight: {
             targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
             targetY = 0;
             break;
         }
-        case WindowAnchor::Left: {
+        case Syskos::Window::Anchor::Left: {
             targetX = 0;
             targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
             break;
         }
-        case WindowAnchor::Center: {
+        case Syskos::Window::Anchor::Center: {
             targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
             targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
             break;
         }
-        case WindowAnchor::Right: {
+        case Syskos::Window::Anchor::Right: {
             targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
             targetY = (workAreaSize.cy - extendedFrameBoundsSize.cy) / 2;
             break;
         }
-        case WindowAnchor::BottomLeft: {
+        case Syskos::Window::Anchor::BottomLeft: {
             targetX = 0;
             targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
             break;
         }
-        case WindowAnchor::Bottom: {
+        case Syskos::Window::Anchor::Bottom: {
             targetX = (workAreaSize.cx - extendedFrameBoundsSize.cx) / 2;
             targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
             break;
         }
-        case WindowAnchor::BottomRight: {
+        case Syskos::Window::Anchor::BottomRight: {
             targetX = workAreaSize.cx - extendedFrameBoundsSize.cx;
             targetY = workAreaSize.cy - extendedFrameBoundsSize.cy;
             break;
         }
         default: {
-            throw std::invalid_argument("Unhandled WindowAnchor in MoveTo");
+            throw std::invalid_argument("Unhandled Anchor in MoveTo");
         }
     }
 
@@ -161,4 +161,4 @@ void MoveTo(LONG targetX, LONG targetY) {
     MoveToImpl(hwnd, targetX, targetY);
 }
 
-}  // namespace Syskos::Window::Detail::Visual
+}  // namespace Syskos::Detail::Window::Visual

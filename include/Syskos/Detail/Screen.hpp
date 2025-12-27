@@ -4,11 +4,11 @@
 
 #include <Windows.h>
 
-namespace Syskos::Screen::Detail {
+namespace Syskos::Detail::Screen {
 
 int GetTaskbarHeight();
 SIZE GetWorkAreaSize();
 
-}  // namespace Syskos::Screen::Detail
+}  // namespace Syskos::Detail::Screen
 
 #endif  // end SCREEN_HPP

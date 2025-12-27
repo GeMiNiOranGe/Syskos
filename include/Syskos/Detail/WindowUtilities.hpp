@@ -4,10 +4,10 @@
 
 #include <Windows.h>
 
-namespace Syskos::Window::Detail::Utilities {
+namespace Syskos::Detail::Window::Utilities {
 
 HWND GetHandleWindow();
 
-}  // namespace Syskos::Window::Detail::Utilities
+}  // namespace Syskos::Detail::Window::Utilities
 
 #endif  // end WINDOWUTILITIES_HPP

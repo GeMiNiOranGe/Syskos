@@ -3,7 +3,7 @@
 namespace Syskos::Window {
 
 void SetResizable(bool enabled) {
-    HWND console = Detail::Utilities::GetHandleWindow();
+    HWND console = Detail::Window::Utilities::GetHandleWindow();
 
     LONG style = GetWindowLong(console, GWL_STYLE);
 
@@ -20,94 +20,94 @@ void SetResizable(bool enabled) {
     SetWindowLong(console, GWL_STYLE, style);
 }
 
-HRESULT GetWindowGeometry(WindowGeometry & geometry) {
-    return Detail::Visual::GetWindowGeometry(geometry);
+HRESULT GetGeometry(Geometry & geometry) {
+    return Detail::Window::Visual::GetGeometry(geometry);
 }
 
 void MoveToTopLeft(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToTopLeft();
+        Detail::Window::Visual::MoveToTopLeft();
     } else {
-        Detail::Standard::MoveToTopLeft();
+        Detail::Window::Standard::MoveToTopLeft();
     }
 }
 
 void MoveToTop(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToTop();
+        Detail::Window::Visual::MoveToTop();
     } else {
-        Detail::Standard::MoveToTop();
+        Detail::Window::Standard::MoveToTop();
     }
 }
 
 void MoveToTopRight(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToTopRight();
+        Detail::Window::Visual::MoveToTopRight();
     } else {
-        Detail::Standard::MoveToTopRight();
+        Detail::Window::Standard::MoveToTopRight();
     }
 }
 
 void MoveToLeft(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToLeft();
+        Detail::Window::Visual::MoveToLeft();
     } else {
-        Detail::Standard::MoveToLeft();
+        Detail::Window::Standard::MoveToLeft();
     }
 }
 
 void MoveToCenter(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToCenter();
+        Detail::Window::Visual::MoveToCenter();
     } else {
-        Detail::Standard::MoveToCenter();
+        Detail::Window::Standard::MoveToCenter();
     }
 }
 
 void MoveToRight(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToRight();
+        Detail::Window::Visual::MoveToRight();
     } else {
-        Detail::Standard::MoveToRight();
+        Detail::Window::Standard::MoveToRight();
     }
 }
 
 void MoveToBottomLeft(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToBottomLeft();
+        Detail::Window::Visual::MoveToBottomLeft();
     } else {
-        Detail::Standard::MoveToBottomLeft();
+        Detail::Window::Standard::MoveToBottomLeft();
     }
 }
 
 void MoveToBottom(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToBottom();
+        Detail::Window::Visual::MoveToBottom();
     } else {
-        Detail::Standard::MoveToBottom();
+        Detail::Window::Standard::MoveToBottom();
     }
 }
 
 void MoveToBottomRight(bool visual) {
     if (visual) {
-        Detail::Visual::MoveToBottomRight();
+        Detail::Window::Visual::MoveToBottomRight();
     } else {
-        Detail::Standard::MoveToBottomRight();
+        Detail::Window::Standard::MoveToBottomRight();
     }
 }
 
 void MoveTo(LONG xCoord, LONG yCoord, bool visual) {
     if (visual) {
-        Detail::Visual::MoveTo(xCoord, yCoord);
+        Detail::Window::Visual::MoveTo(xCoord, yCoord);
     } else {
-        Detail::Standard::MoveTo(xCoord, yCoord);
+        Detail::Window::Standard::MoveTo(xCoord, yCoord);
     }
 }
 
 void Resize(LONG width, LONG height) {
     RECT client, bounds;
     POINT offset;
-    HWND hwnd = Detail::Utilities::GetHandleWindow();
+    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
     GetClientRect(hwnd, &client);
     GetWindowRect(hwnd, &bounds);
     // find the offset to add to the screen (e.g: x = 33, y = 39)
