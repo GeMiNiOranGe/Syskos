@@ -17,16 +17,6 @@ SIZE GetExtendedFrameBoundsSize(HWND hwnd) {
     return {cx, cy};
 }
 
-HWND GetHandleWindow() {
-    static HWND hwnd = nullptr;
-
-    if (!hwnd) {
-        hwnd = GetConsoleWindow();
-    }
-
-    return hwnd;
-}
-
 void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
     RECT extendedFrameBounds = GetExtendedFrameBoundsRect(hwnd);
     RECT window{};
@@ -49,7 +39,7 @@ void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
 namespace Syskos::Window::Detail::Visual {
 
 HRESULT GetWindowGeometry(WindowGeometry & geometry) {
-    HWND hwnd = GetHandleWindow();
+    HWND hwnd = Utilities::GetHandleWindow();
 
     RECT rect{};
     HRESULT result = DwmGetWindowAttribute(
@@ -105,7 +95,7 @@ void MoveToBottomRight() {
 }
 
 void MoveTo(WindowAnchor anchor) {
-    HWND hwnd = GetHandleWindow();
+    HWND hwnd = Utilities::GetHandleWindow();
     SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
     SIZE workAreaSize = Screen::Detail::GetWorkAreaSize();
 
@@ -166,7 +156,7 @@ void MoveTo(WindowAnchor anchor) {
 }
 
 void MoveTo(LONG targetX, LONG targetY) {
-    HWND hwnd = GetHandleWindow();
+    HWND hwnd = Utilities::GetHandleWindow();
 
     MoveToImpl(hwnd, targetX, targetY);
 }

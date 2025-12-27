@@ -38,6 +38,7 @@ target_sources(syskos
         library/Screen.cpp
         library/Syskos.cpp
         library/WindowStandard.cpp
+        library/WindowUtilities.cpp
         library/WindowVisual.cpp
     PUBLIC
         FILE_SET HEADERS
@@ -45,6 +46,7 @@ target_sources(syskos
         FILES
             include/Syskos/Detail/Screen.hpp
             include/Syskos/Detail/WindowStandard.hpp
+            include/Syskos/Detail/WindowUtilities.hpp
             include/Syskos/Detail/WindowVisual.hpp
             include/Syskos/Syskos.hpp
             include/Syskos/WindowAnchor.hpp

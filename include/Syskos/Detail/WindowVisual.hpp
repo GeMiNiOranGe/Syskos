@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 #include <Syskos/Detail/Screen.hpp>
+#include <Syskos/Detail/WindowUtilities.hpp>
 #include <Syskos/WindowAnchor.hpp>
 #include <Syskos/WindowGeometry.hpp>
 

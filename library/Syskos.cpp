@@ -3,10 +3,7 @@
 namespace Syskos::Window {
 
 void SetResizable(bool enabled) {
-    HWND console = GetConsoleWindow();
-    if (console == NULL) {
-        return;
-    }
+    HWND console = Detail::Utilities::GetHandleWindow();
 
     LONG style = GetWindowLong(console, GWL_STYLE);
 
@@ -110,7 +107,7 @@ void MoveTo(LONG xCoord, LONG yCoord, bool visual) {
 void Resize(LONG width, LONG height) {
     RECT client, bounds;
     POINT offset;
-    HWND hwnd = GetConsoleWindow();
+    HWND hwnd = Detail::Utilities::GetHandleWindow();
     GetClientRect(hwnd, &client);
     GetWindowRect(hwnd, &bounds);
     // find the offset to add to the screen (e.g: x = 33, y = 39)
