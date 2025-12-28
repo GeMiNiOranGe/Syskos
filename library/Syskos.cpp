@@ -96,11 +96,19 @@ void MoveToBottomRight(bool visual) {
     }
 }
 
-void MoveTo(LONG xCoord, LONG yCoord, bool visual) {
+void MoveTo(Syskos::Window::Anchor anchor, bool visual) {
     if (visual) {
-        Detail::Window::Visual::MoveTo(xCoord, yCoord);
+        Detail::Window::Visual::MoveTo(anchor);
     } else {
-        Detail::Window::Legacy::MoveTo(xCoord, yCoord);
+        Detail::Window::Legacy::MoveTo(anchor);
+    }
+}
+
+void MoveTo(LONG targetX, LONG targetY, bool visual) {
+    if (visual) {
+        Detail::Window::Visual::MoveTo(targetX, targetY);
+    } else {
+        Detail::Window::Legacy::MoveTo(targetX, targetY);
     }
 }
 
