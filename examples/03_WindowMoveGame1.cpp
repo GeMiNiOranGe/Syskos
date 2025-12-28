@@ -59,7 +59,7 @@ int main(int argc, char const * argv[]) {
         if (key == KEY_MODE) {
             isVisualMode = !isVisualMode;
 
-            std::string mode = isVisualMode ? "Visual" : "Standard";
+            std::string mode = isVisualMode ? "Visual" : "Legacy";
             std::cout << "Current move mode: " << mode << '\n';
 
             if (lastKey != 0) {

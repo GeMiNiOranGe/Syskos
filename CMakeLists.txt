@@ -37,7 +37,7 @@ target_sources(syskos
     PRIVATE
         library/Screen.cpp
         library/Syskos.cpp
-        library/WindowStandard.cpp
+        library/WindowLegacy.cpp
         library/WindowUtilities.cpp
         library/WindowVisual.cpp
     PUBLIC
@@ -45,7 +45,7 @@ target_sources(syskos
         BASE_DIRS include
         FILES
             include/Syskos/Detail/Screen.hpp
-            include/Syskos/Detail/WindowStandard.hpp
+            include/Syskos/Detail/WindowLegacy.hpp
             include/Syskos/Detail/WindowUtilities.hpp
             include/Syskos/Detail/WindowVisual.hpp
             include/Syskos/Syskos.hpp

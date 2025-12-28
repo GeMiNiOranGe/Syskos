@@ -28,7 +28,7 @@ void MoveToTopLeft(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToTopLeft();
     } else {
-        Detail::Window::Standard::MoveToTopLeft();
+        Detail::Window::Legacy::MoveToTopLeft();
     }
 }
 
@@ -36,7 +36,7 @@ void MoveToTop(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToTop();
     } else {
-        Detail::Window::Standard::MoveToTop();
+        Detail::Window::Legacy::MoveToTop();
     }
 }
 
@@ -44,7 +44,7 @@ void MoveToTopRight(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToTopRight();
     } else {
-        Detail::Window::Standard::MoveToTopRight();
+        Detail::Window::Legacy::MoveToTopRight();
     }
 }
 
@@ -52,7 +52,7 @@ void MoveToLeft(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToLeft();
     } else {
-        Detail::Window::Standard::MoveToLeft();
+        Detail::Window::Legacy::MoveToLeft();
     }
 }
 
@@ -60,7 +60,7 @@ void MoveToCenter(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToCenter();
     } else {
-        Detail::Window::Standard::MoveToCenter();
+        Detail::Window::Legacy::MoveToCenter();
     }
 }
 
@@ -68,7 +68,7 @@ void MoveToRight(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToRight();
     } else {
-        Detail::Window::Standard::MoveToRight();
+        Detail::Window::Legacy::MoveToRight();
     }
 }
 
@@ -76,7 +76,7 @@ void MoveToBottomLeft(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToBottomLeft();
     } else {
-        Detail::Window::Standard::MoveToBottomLeft();
+        Detail::Window::Legacy::MoveToBottomLeft();
     }
 }
 
@@ -84,7 +84,7 @@ void MoveToBottom(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToBottom();
     } else {
-        Detail::Window::Standard::MoveToBottom();
+        Detail::Window::Legacy::MoveToBottom();
     }
 }
 
@@ -92,7 +92,7 @@ void MoveToBottomRight(bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveToBottomRight();
     } else {
-        Detail::Window::Standard::MoveToBottomRight();
+        Detail::Window::Legacy::MoveToBottomRight();
     }
 }
 
@@ -100,7 +100,7 @@ void MoveTo(LONG xCoord, LONG yCoord, bool visual) {
     if (visual) {
         Detail::Window::Visual::MoveTo(xCoord, yCoord);
     } else {
-        Detail::Window::Standard::MoveTo(xCoord, yCoord);
+        Detail::Window::Legacy::MoveTo(xCoord, yCoord);
     }
 }
 

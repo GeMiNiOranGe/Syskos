@@ -1,12 +1,12 @@
 #pragma once
-#ifndef WINDOWSTANDARD_HPP
-#define WINDOWSTANDARD_HPP
+#ifndef WINDOWLEGACY_HPP
+#define WINDOWLEGACY_HPP
 
 #include <Windows.h>
 
 #include <Syskos/Detail/Screen.hpp>
 
-namespace Syskos::Detail::Window::Standard {
+namespace Syskos::Detail::Window::Legacy {
 
 void MoveToTopLeft();
 void MoveToTop();
@@ -19,6 +19,6 @@ void MoveToBottom();
 void MoveToBottomRight();
 void MoveTo(LONG xCoord, LONG yCoord);
 
-}  // namespace Syskos::Detail::Window::Standard
+}  // namespace Syskos::Detail::Window::Legacy
 
-#endif  // end WINDOWSTANDARD_HPP
+#endif  // end WINDOWLEGACY_HPP

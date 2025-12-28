@@ -1,4 +1,4 @@
-#include <Syskos/Detail/WindowStandard.hpp>
+#include <Syskos/Detail/WindowLegacy.hpp>
 
 namespace {
 
@@ -6,7 +6,7 @@ const SIZE WORK_AREA_SIZE = Syskos::Detail::Screen::GetWorkAreaSize();
 
 }
 
-namespace Syskos::Detail::Window::Standard {
+namespace Syskos::Detail::Window::Legacy {
 
 void MoveToTopLeft() {
     int posX = 0;
@@ -95,4 +95,4 @@ void MoveTo(LONG xCoord, LONG yCoord) {
     MoveWindow(hwnd, xCoord, yCoord, width, height, TRUE);
 }
 
-}  // namespace Syskos::Detail::Window::Standard
+}  // namespace Syskos::Detail::Window::Legacy

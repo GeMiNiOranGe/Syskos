@@ -4,7 +4,7 @@
 
 #include <Windows.h>
 
-#include <Syskos/Detail/WindowStandard.hpp>
+#include <Syskos/Detail/WindowLegacy.hpp>
 #include <Syskos/Detail/WindowVisual.hpp>
 
 namespace Syskos::Window {
