@@ -110,12 +110,35 @@ void Resize(LONG width, LONG height) {
     HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
     GetClientRect(hwnd, &client);
     GetWindowRect(hwnd, &bounds);
-    // find the offset to add to the screen (e.g: x = 33, y = 39)
+
     offset.x = (bounds.right - bounds.left) - client.right;
     offset.y = (bounds.bottom - bounds.top) - client.bottom;
+
     LONG finalWidth = width + offset.x;
     LONG finalHeight = height + offset.y;
+
     MoveWindow(hwnd, bounds.left, bounds.top, finalWidth, finalHeight, TRUE);
+}
+
+void ResizeByChars(int columns, int rows) {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // nFont is usually 0 for the default font
+    CONSOLE_FONT_INFO cfi{};
+    if (!GetCurrentConsoleFont(hOut, FALSE, &cfi)) {
+        return;
+    }
+
+    // Size of a charactor (pixel)
+    COORD fontSize = GetConsoleFontSize(hOut, cfi.nFont);
+
+    LONG charWidthPx = fontSize.X;
+    LONG charHeightPx = fontSize.Y;
+
+    LONG targetClientWidth = columns * charWidthPx;
+    LONG targetClientHeight = rows * charHeightPx;
+
+    Resize(targetClientWidth, targetClientHeight);
 }
 
 }  // namespace Syskos::Window

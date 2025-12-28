@@ -23,7 +23,9 @@ void MoveToBottomLeft(bool visual = true);
 void MoveToBottom(bool visual = true);
 void MoveToBottomRight(bool visual = true);
 void MoveTo(LONG xCoord, LONG yCoord, bool visual = true);
+
 void Resize(LONG width, LONG height);
+void ResizeByChars(int columns, int rows);
 
 }  // namespace Syskos::Window
 
