@@ -3,9 +3,12 @@
 #define SYSKOS_HPP
 
 #include <Windows.h>
+#include <stdexcept>
 
-#include <Syskos/Detail/WindowLegacy.hpp>
+#include <Syskos/Detail/Screen.hpp>
+#include <Syskos/Detail/WindowUtilities.hpp>
 #include <Syskos/Detail/WindowVisual.hpp>
+#include <Syskos/WindowAnchor.hpp>
 #include <Syskos/WindowGeometry.hpp>
 
 namespace Syskos::Window {
@@ -13,7 +16,7 @@ namespace Syskos::Window {
 void SetResizable(bool enabled);
 
 RECT GetRect(bool visual = true);
-Syskos::Window::Geometry GetGeometry(bool visual = true);
+Geometry GetGeometry(bool visual = true);
 
 void MoveToTopLeft(bool visual = true);
 void MoveToTop(bool visual = true);
@@ -24,7 +27,7 @@ void MoveToRight(bool visual = true);
 void MoveToBottomLeft(bool visual = true);
 void MoveToBottom(bool visual = true);
 void MoveToBottomRight(bool visual = true);
-void MoveTo(Syskos::Window::Anchor anchor, bool visual = true);
+void MoveTo(Anchor anchor, bool visual = true);
 void MoveTo(LONG targetX, LONG targetY, bool visual = true);
 
 void Resize(LONG width, LONG height);

@@ -37,9 +37,9 @@ RECT GetRect(bool visual) {
     return rect.value();
 }
 
-Syskos::Window::Geometry GetGeometry(bool visual) {
+Geometry GetGeometry(bool visual) {
     RECT rect = GetRect(visual);
-    Syskos::Window::Geometry geometry;
+    Geometry geometry;
 
     geometry.point.x = rect.left;
     geometry.point.y = rect.top;
@@ -50,90 +50,108 @@ Syskos::Window::Geometry GetGeometry(bool visual) {
 }
 
 void MoveToTopLeft(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToTopLeft();
-    } else {
-        Detail::Window::Legacy::MoveToTopLeft();
-    }
+    MoveTo(Anchor::TopLeft, visual);
 }
 
 void MoveToTop(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToTop();
-    } else {
-        Detail::Window::Legacy::MoveToTop();
-    }
+    MoveTo(Anchor::Top, visual);
 }
 
 void MoveToTopRight(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToTopRight();
-    } else {
-        Detail::Window::Legacy::MoveToTopRight();
-    }
+    MoveTo(Anchor::TopRight, visual);
 }
 
 void MoveToLeft(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToLeft();
-    } else {
-        Detail::Window::Legacy::MoveToLeft();
-    }
+    MoveTo(Anchor::Left, visual);
 }
 
 void MoveToCenter(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToCenter();
-    } else {
-        Detail::Window::Legacy::MoveToCenter();
-    }
+    MoveTo(Anchor::Center, visual);
 }
 
 void MoveToRight(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToRight();
-    } else {
-        Detail::Window::Legacy::MoveToRight();
-    }
+    MoveTo(Anchor::Right, visual);
 }
 
 void MoveToBottomLeft(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToBottomLeft();
-    } else {
-        Detail::Window::Legacy::MoveToBottomLeft();
-    }
+    MoveTo(Anchor::BottomLeft, visual);
 }
 
 void MoveToBottom(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToBottom();
-    } else {
-        Detail::Window::Legacy::MoveToBottom();
-    }
+    MoveTo(Anchor::Bottom, visual);
 }
 
 void MoveToBottomRight(bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveToBottomRight();
-    } else {
-        Detail::Window::Legacy::MoveToBottomRight();
-    }
+    MoveTo(Anchor::BottomRight, visual);
 }
 
-void MoveTo(Syskos::Window::Anchor anchor, bool visual) {
-    if (visual) {
-        Detail::Window::Visual::MoveTo(anchor);
-    } else {
-        Detail::Window::Legacy::MoveTo(anchor);
+void MoveTo(Anchor anchor, bool visual) {
+    SIZE boundsSize = GetGeometry(visual).size;
+    SIZE workAreaSize = Screen::GetWorkAreaSize();
+
+    LONG targetX, targetY;
+
+    switch (anchor) {
+        case Anchor::TopLeft: {
+            targetX = 0;
+            targetY = 0;
+            break;
+        }
+        case Anchor::Top: {
+            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
+            targetY = 0;
+            break;
+        }
+        case Anchor::TopRight: {
+            targetX = workAreaSize.cx - boundsSize.cx;
+            targetY = 0;
+            break;
+        }
+        case Anchor::Left: {
+            targetX = 0;
+            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            break;
+        }
+        case Anchor::Center: {
+            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
+            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            break;
+        }
+        case Anchor::Right: {
+            targetX = workAreaSize.cx - boundsSize.cx;
+            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            break;
+        }
+        case Anchor::BottomLeft: {
+            targetX = 0;
+            targetY = workAreaSize.cy - boundsSize.cy;
+            break;
+        }
+        case Anchor::Bottom: {
+            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
+            targetY = workAreaSize.cy - boundsSize.cy;
+            break;
+        }
+        case Anchor::BottomRight: {
+            targetX = workAreaSize.cx - boundsSize.cx;
+            targetY = workAreaSize.cy - boundsSize.cy;
+            break;
+        }
+        default: {
+            throw std::invalid_argument("Unhandled Anchor in MoveTo");
+        }
     }
+
+    MoveTo(targetX, targetY, visual);
 }
 
 void MoveTo(LONG targetX, LONG targetY, bool visual) {
+    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
+
     if (visual) {
-        Detail::Window::Visual::MoveTo(targetX, targetY);
+        Detail::Window::Visual::MoveTo(hwnd, targetX, targetY);
     } else {
-        Detail::Window::Legacy::MoveTo(targetX, targetY);
+        Detail::Window::Legacy::MoveTo(hwnd, targetX, targetY);
     }
 }
 

@@ -5,11 +5,8 @@
 #include <Windows.h>
 #include <dwmapi.h>
 #include <optional>
-#include <stdexcept>
 
-#include <Syskos/Detail/Screen.hpp>
-#include <Syskos/Detail/WindowUtilities.hpp>
-#include <Syskos/WindowAnchor.hpp>
+#include <Syskos/Detail/WindowLegacy.hpp>
 
 #pragma comment(lib, "Dwmapi.lib")
 
@@ -17,17 +14,7 @@ namespace Syskos::Detail::Window::Visual {
 
 std::optional<RECT> GetRect(HWND hwnd);
 
-void MoveToTopLeft();
-void MoveToTop();
-void MoveToTopRight();
-void MoveToLeft();
-void MoveToCenter();
-void MoveToRight();
-void MoveToBottomLeft();
-void MoveToBottom();
-void MoveToBottomRight();
-void MoveTo(Syskos::Window::Anchor anchor);
-void MoveTo(LONG targetX, LONG targetY);
+void MoveTo(HWND hwnd, LONG targetX, LONG targetY);
 
 }  // namespace Syskos::Detail::Window::Visual
 
