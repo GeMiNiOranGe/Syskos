@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SYSUTILS_HPP
-#define SYSUTILS_HPP
+#ifndef SYSKOS_HPP
+#define SYSKOS_HPP
 
 #include <Windows.h>
 
@@ -42,4 +42,4 @@ inline int GetTaskbarHeight() {
 
 }  // namespace Syskos::Screen
 
-#endif  // end SYSUTILS_HPP
+#endif  // end SYSKOS_HPP
