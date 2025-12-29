@@ -4,18 +4,18 @@
 
 #include <Windows.h>
 #include <dwmapi.h>
+#include <optional>
 #include <stdexcept>
 
 #include <Syskos/Detail/Screen.hpp>
 #include <Syskos/Detail/WindowUtilities.hpp>
 #include <Syskos/WindowAnchor.hpp>
-#include <Syskos/WindowGeometry.hpp>
 
 #pragma comment(lib, "Dwmapi.lib")
 
 namespace Syskos::Detail::Window::Visual {
 
-HRESULT GetGeometry(Syskos::Window::Geometry & geometry);
+std::optional<RECT> GetRect(HWND hwnd);
 
 void MoveToTopLeft();
 void MoveToTop();

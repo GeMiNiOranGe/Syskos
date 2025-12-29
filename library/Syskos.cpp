@@ -20,8 +20,33 @@ void SetResizable(bool enabled) {
     SetWindowLong(console, GWL_STYLE, style);
 }
 
-HRESULT GetGeometry(Geometry & geometry) {
-    return Detail::Window::Visual::GetGeometry(geometry);
+RECT GetRect(bool visual) {
+    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
+    std::optional<RECT> rect;
+
+    if (visual) {
+        rect = Detail::Window::Visual::GetRect(hwnd);
+    } else {
+        rect = Detail::Window::Legacy::GetRect(hwnd);
+    }
+
+    if (!rect.has_value()) {
+        throw std::runtime_error("Failed to get window RECT");
+    }
+
+    return rect.value();
+}
+
+Syskos::Window::Geometry GetGeometry(bool visual) {
+    RECT rect = GetRect(visual);
+    Syskos::Window::Geometry geometry;
+
+    geometry.point.x = rect.left;
+    geometry.point.y = rect.top;
+    geometry.size.cx = rect.right - rect.left;
+    geometry.size.cy = rect.bottom - rect.top;
+
+    return geometry;
 }
 
 void MoveToTopLeft(bool visual) {

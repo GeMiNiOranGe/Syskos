@@ -2,28 +2,20 @@
 
 namespace {
 
-RECT GetExtendedFrameBoundsRect(HWND hwnd) {
-    RECT attribute{};
-    DwmGetWindowAttribute(
-        hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &attribute, sizeof(attribute)
-    );
-    return attribute;
-}
-
-SIZE GetExtendedFrameBoundsSize(HWND hwnd) {
-    RECT attribute = GetExtendedFrameBoundsRect(hwnd);
-    LONG cx = attribute.right - attribute.left;
-    LONG cy = attribute.bottom - attribute.top;
+SIZE GetSize(HWND hwnd) {
+    RECT rect = Syskos::Detail::Window::Visual::GetRect(hwnd).value();
+    LONG cx = rect.right - rect.left;
+    LONG cy = rect.bottom - rect.top;
     return {cx, cy};
 }
 
 void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
-    RECT extendedFrameBounds = GetExtendedFrameBoundsRect(hwnd);
+    RECT rect = Syskos::Detail::Window::Visual::GetRect(hwnd).value();
     RECT window{};
     GetWindowRect(hwnd, &window);
 
-    LONG offsetX = extendedFrameBounds.left - window.left;
-    LONG offsetY = extendedFrameBounds.top - window.top;
+    LONG offsetX = rect.left - window.left;
+    LONG offsetY = rect.top - window.top;
 
     LONG width = window.right - window.left;
     LONG height = window.bottom - window.top;
@@ -38,24 +30,17 @@ void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
 
 namespace Syskos::Detail::Window::Visual {
 
-HRESULT GetGeometry(Syskos::Window::Geometry & geometry) {
-    HWND hwnd = Utilities::GetHandleWindow();
-
+std::optional<RECT> GetRect(HWND hwnd) {
     RECT rect{};
     HRESULT result = DwmGetWindowAttribute(
         hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &rect, sizeof(rect)
     );
 
     if (FAILED(result)) {
-        return result;
+        return std::nullopt;
     }
 
-    geometry.point.x = rect.left;
-    geometry.point.y = rect.top;
-    geometry.size.cx = rect.right - rect.left;
-    geometry.size.cy = rect.bottom - rect.top;
-
-    return S_OK;
+    return rect;
 }
 
 void MoveToTopLeft() {
@@ -96,7 +81,7 @@ void MoveToBottomRight() {
 
 void MoveTo(Syskos::Window::Anchor anchor) {
     HWND hwnd = Utilities::GetHandleWindow();
-    SIZE extendedFrameBoundsSize = GetExtendedFrameBoundsSize(hwnd);
+    SIZE extendedFrameBoundsSize = GetSize(hwnd);
     SIZE workAreaSize = Screen::GetWorkAreaSize();
 
     LONG targetX, targetY;

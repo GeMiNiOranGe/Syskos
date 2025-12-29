@@ -16,6 +16,15 @@ void MoveToImpl(HWND hwnd, LONG targetX, LONG targetY) {
 
 namespace Syskos::Detail::Window::Legacy {
 
+std::optional<RECT> GetRect(HWND hwnd) {
+    RECT rect{};
+    if (!GetWindowRect(hwnd, &rect)) {
+        return std::nullopt;
+    }
+
+    return rect;
+}
+
 void MoveToTopLeft() {
     MoveTo(Syskos::Window::Anchor::TopLeft);
 }

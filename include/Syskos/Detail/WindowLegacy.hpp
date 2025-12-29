@@ -3,6 +3,7 @@
 #define WINDOWLEGACY_HPP
 
 #include <Windows.h>
+#include <optional>
 #include <stdexcept>
 
 #include <Syskos/Detail/Screen.hpp>
@@ -10,6 +11,8 @@
 #include <Syskos/WindowAnchor.hpp>
 
 namespace Syskos::Detail::Window::Legacy {
+
+std::optional<RECT> GetRect(HWND hwnd);
 
 void MoveToTopLeft();
 void MoveToTop();

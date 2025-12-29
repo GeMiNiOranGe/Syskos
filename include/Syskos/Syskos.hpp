@@ -6,12 +6,14 @@
 
 #include <Syskos/Detail/WindowLegacy.hpp>
 #include <Syskos/Detail/WindowVisual.hpp>
+#include <Syskos/WindowGeometry.hpp>
 
 namespace Syskos::Window {
 
 void SetResizable(bool enabled);
 
-HRESULT GetGeometry(Geometry & geometry);
+RECT GetRect(bool visual = true);
+Syskos::Window::Geometry GetGeometry(bool visual = true);
 
 void MoveToTopLeft(bool visual = true);
 void MoveToTop(bool visual = true);
