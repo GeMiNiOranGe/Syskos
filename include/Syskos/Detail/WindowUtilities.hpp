@@ -6,7 +6,7 @@
 
 namespace Syskos::Detail::Window::Utilities {
 
-HWND GetHandleWindow();
+HWND GetConsoleWindowHandle();
 
 }  // namespace Syskos::Detail::Window::Utilities
 

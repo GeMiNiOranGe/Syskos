@@ -2,7 +2,7 @@
 
 namespace Syskos::Detail::Window::Utilities {
 
-HWND GetHandleWindow() {
+HWND GetConsoleWindowHandle() {
     static HWND hwnd = nullptr;
 
     if (!hwnd) {

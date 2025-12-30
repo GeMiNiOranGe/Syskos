@@ -3,7 +3,7 @@
 namespace Syskos::Window {
 
 void SetResizable(bool enabled) {
-    HWND console = Detail::Window::Utilities::GetHandleWindow();
+    HWND console = Detail::Window::Utilities::GetConsoleWindowHandle();
 
     LONG style = GetWindowLong(console, GWL_STYLE);
 
@@ -20,11 +20,11 @@ void SetResizable(bool enabled) {
     SetWindowLong(console, GWL_STYLE, style);
 }
 
-RECT GetRect(bool visual) {
-    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
+RECT GetRect(bool useVisualBounds) {
+    HWND hwnd = Detail::Window::Utilities::GetConsoleWindowHandle();
     std::optional<RECT> rect;
 
-    if (visual) {
+    if (useVisualBounds) {
         rect = Detail::Window::Visual::GetRect(hwnd);
     } else {
         rect = Detail::Window::Legacy::GetRect(hwnd);
@@ -37,8 +37,8 @@ RECT GetRect(bool visual) {
     return rect.value();
 }
 
-Geometry GetGeometry(bool visual) {
-    RECT rect = GetRect(visual);
+Geometry GetGeometry(bool useVisualBounds) {
+    RECT rect = GetRect(useVisualBounds);
     Geometry geometry;
 
     geometry.point.x = rect.left;
@@ -49,44 +49,44 @@ Geometry GetGeometry(bool visual) {
     return geometry;
 }
 
-void MoveToTopLeft(bool visual) {
-    MoveTo(Anchor::TopLeft, visual);
+void MoveToTopLeft(bool useVisualBounds) {
+    MoveTo(Anchor::TopLeft, useVisualBounds);
 }
 
-void MoveToTop(bool visual) {
-    MoveTo(Anchor::Top, visual);
+void MoveToTop(bool useVisualBounds) {
+    MoveTo(Anchor::Top, useVisualBounds);
 }
 
-void MoveToTopRight(bool visual) {
-    MoveTo(Anchor::TopRight, visual);
+void MoveToTopRight(bool useVisualBounds) {
+    MoveTo(Anchor::TopRight, useVisualBounds);
 }
 
-void MoveToLeft(bool visual) {
-    MoveTo(Anchor::Left, visual);
+void MoveToLeft(bool useVisualBounds) {
+    MoveTo(Anchor::Left, useVisualBounds);
 }
 
-void MoveToCenter(bool visual) {
-    MoveTo(Anchor::Center, visual);
+void MoveToCenter(bool useVisualBounds) {
+    MoveTo(Anchor::Center, useVisualBounds);
 }
 
-void MoveToRight(bool visual) {
-    MoveTo(Anchor::Right, visual);
+void MoveToRight(bool useVisualBounds) {
+    MoveTo(Anchor::Right, useVisualBounds);
 }
 
-void MoveToBottomLeft(bool visual) {
-    MoveTo(Anchor::BottomLeft, visual);
+void MoveToBottomLeft(bool useVisualBounds) {
+    MoveTo(Anchor::BottomLeft, useVisualBounds);
 }
 
-void MoveToBottom(bool visual) {
-    MoveTo(Anchor::Bottom, visual);
+void MoveToBottom(bool useVisualBounds) {
+    MoveTo(Anchor::Bottom, useVisualBounds);
 }
 
-void MoveToBottomRight(bool visual) {
-    MoveTo(Anchor::BottomRight, visual);
+void MoveToBottomRight(bool useVisualBounds) {
+    MoveTo(Anchor::BottomRight, useVisualBounds);
 }
 
-void MoveTo(Anchor anchor, bool visual) {
-    SIZE boundsSize = GetGeometry(visual).size;
+void MoveTo(Anchor anchor, bool useVisualBounds) {
+    SIZE windowSize = GetGeometry(useVisualBounds).size;
     SIZE workAreaSize = Screen::GetWorkAreaSize();
 
     LONG targetX, targetY;
@@ -98,43 +98,43 @@ void MoveTo(Anchor anchor, bool visual) {
             break;
         }
         case Anchor::Top: {
-            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
+            targetX = (workAreaSize.cx - windowSize.cx) / 2;
             targetY = 0;
             break;
         }
         case Anchor::TopRight: {
-            targetX = workAreaSize.cx - boundsSize.cx;
+            targetX = workAreaSize.cx - windowSize.cx;
             targetY = 0;
             break;
         }
         case Anchor::Left: {
             targetX = 0;
-            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            targetY = (workAreaSize.cy - windowSize.cy) / 2;
             break;
         }
         case Anchor::Center: {
-            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
-            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            targetX = (workAreaSize.cx - windowSize.cx) / 2;
+            targetY = (workAreaSize.cy - windowSize.cy) / 2;
             break;
         }
         case Anchor::Right: {
-            targetX = workAreaSize.cx - boundsSize.cx;
-            targetY = (workAreaSize.cy - boundsSize.cy) / 2;
+            targetX = workAreaSize.cx - windowSize.cx;
+            targetY = (workAreaSize.cy - windowSize.cy) / 2;
             break;
         }
         case Anchor::BottomLeft: {
             targetX = 0;
-            targetY = workAreaSize.cy - boundsSize.cy;
+            targetY = workAreaSize.cy - windowSize.cy;
             break;
         }
         case Anchor::Bottom: {
-            targetX = (workAreaSize.cx - boundsSize.cx) / 2;
-            targetY = workAreaSize.cy - boundsSize.cy;
+            targetX = (workAreaSize.cx - windowSize.cx) / 2;
+            targetY = workAreaSize.cy - windowSize.cy;
             break;
         }
         case Anchor::BottomRight: {
-            targetX = workAreaSize.cx - boundsSize.cx;
-            targetY = workAreaSize.cy - boundsSize.cy;
+            targetX = workAreaSize.cx - windowSize.cx;
+            targetY = workAreaSize.cy - windowSize.cy;
             break;
         }
         default: {
@@ -142,13 +142,13 @@ void MoveTo(Anchor anchor, bool visual) {
         }
     }
 
-    MoveTo(targetX, targetY, visual);
+    MoveTo(targetX, targetY, useVisualBounds);
 }
 
-void MoveTo(LONG targetX, LONG targetY, bool visual) {
-    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
+void MoveTo(LONG targetX, LONG targetY, bool useVisualBounds) {
+    HWND hwnd = Detail::Window::Utilities::GetConsoleWindowHandle();
 
-    if (visual) {
+    if (useVisualBounds) {
         Detail::Window::Visual::MoveTo(hwnd, targetX, targetY);
     } else {
         Detail::Window::Legacy::MoveTo(hwnd, targetX, targetY);
@@ -158,7 +158,7 @@ void MoveTo(LONG targetX, LONG targetY, bool visual) {
 void Resize(LONG width, LONG height) {
     RECT client, bounds;
     POINT offset;
-    HWND hwnd = Detail::Window::Utilities::GetHandleWindow();
+    HWND hwnd = Detail::Window::Utilities::GetConsoleWindowHandle();
     GetClientRect(hwnd, &client);
     GetWindowRect(hwnd, &bounds);
 

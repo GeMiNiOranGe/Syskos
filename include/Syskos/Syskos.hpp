@@ -15,20 +15,20 @@ namespace Syskos::Window {
 
 void SetResizable(bool enabled);
 
-RECT GetRect(bool visual = true);
-Geometry GetGeometry(bool visual = true);
+RECT GetRect(bool useVisualBounds = true);
+Geometry GetGeometry(bool useVisualBounds = true);
 
-void MoveToTopLeft(bool visual = true);
-void MoveToTop(bool visual = true);
-void MoveToTopRight(bool visual = true);
-void MoveToLeft(bool visual = true);
-void MoveToCenter(bool visual = true);
-void MoveToRight(bool visual = true);
-void MoveToBottomLeft(bool visual = true);
-void MoveToBottom(bool visual = true);
-void MoveToBottomRight(bool visual = true);
-void MoveTo(Anchor anchor, bool visual = true);
-void MoveTo(LONG targetX, LONG targetY, bool visual = true);
+void MoveToTopLeft(bool useVisualBounds = true);
+void MoveToTop(bool useVisualBounds = true);
+void MoveToTopRight(bool useVisualBounds = true);
+void MoveToLeft(bool useVisualBounds = true);
+void MoveToCenter(bool useVisualBounds = true);
+void MoveToRight(bool useVisualBounds = true);
+void MoveToBottomLeft(bool useVisualBounds = true);
+void MoveToBottom(bool useVisualBounds = true);
+void MoveToBottomRight(bool useVisualBounds = true);
+void MoveTo(Anchor anchor, bool useVisualBounds = true);
+void MoveTo(LONG targetX, LONG targetY, bool useVisualBounds = true);
 
 void Resize(LONG width, LONG height);
 void ResizeByChars(int columns, int rows);
