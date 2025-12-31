@@ -1,5 +1,19 @@
 #include <Syskos/Syskos.hpp>
 
+namespace Syskos::Console {
+
+COORD GetCursorPosition() {
+    std::optional<COORD> position = Detail::Console::GetCursorPosition();
+
+    if (!position) {
+        throw std::runtime_error("Failed to get console cursor position");
+    }
+
+    return position.value();
+}
+
+}  // namespace Syskos::Console
+
 namespace Syskos::Window {
 
 void SetResizable(bool enabled) {

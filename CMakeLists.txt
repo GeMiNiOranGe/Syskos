@@ -35,6 +35,7 @@ add_library(${SYSKOS_ALIAS} ALIAS syskos)
 
 target_sources(syskos
     PRIVATE
+        library/Console.cpp
         library/Screen.cpp
         library/Syskos.cpp
         library/WindowLegacy.cpp
@@ -44,6 +45,7 @@ target_sources(syskos
         FILE_SET HEADERS
         BASE_DIRS include
         FILES
+            include/Syskos/Detail/Console.hpp
             include/Syskos/Detail/Screen.hpp
             include/Syskos/Detail/WindowLegacy.hpp
             include/Syskos/Detail/WindowUtilities.hpp

@@ -5,11 +5,22 @@
 #include <Windows.h>
 #include <stdexcept>
 
+#include <Syskos/Detail/Console.hpp>
 #include <Syskos/Detail/Screen.hpp>
 #include <Syskos/Detail/WindowUtilities.hpp>
 #include <Syskos/Detail/WindowVisual.hpp>
 #include <Syskos/WindowAnchor.hpp>
 #include <Syskos/WindowGeometry.hpp>
+
+namespace Syskos::Console {
+
+COORD GetCursorPosition();
+
+inline void SetCursorPosition(SHORT x, SHORT y) {
+    Detail::Console::SetCursorPosition(x, y);
+}
+
+}  // namespace Syskos::Console
 
 namespace Syskos::Window {
 
